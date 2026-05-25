@@ -1,0 +1,12 @@
+C:\Users\GURNOOR\source\repos\VoiceCommandApp\VoiceCommandApp\bin\Debug\VoiceCommandApp.exe.config
+C:\Users\GURNOOR\source\repos\VoiceCommandApp\VoiceCommandApp\bin\Debug\VoiceCommandApp.exe
+C:\Users\GURNOOR\source\repos\VoiceCommandApp\VoiceCommandApp\bin\Debug\VoiceCommandApp.pdb
+C:\Users\GURNOOR\source\repos\VoiceCommandApp\VoiceCommandApp\obj\Debug\VoiceCommandApp.csproj.AssemblyReference.cache
+C:\Users\GURNOOR\source\repos\VoiceCommandApp\VoiceCommandApp\obj\Debug\VoiceCommandApp.Form1.resources
+C:\Users\GURNOOR\source\repos\VoiceCommandApp\VoiceCommandApp\obj\Debug\VoiceCommandApp.Properties.Resources.resources
+C:\Users\GURNOOR\source\repos\VoiceCommandApp\VoiceCommandApp\obj\Debug\VoiceCommandApp.Resources.resources
+C:\Users\GURNOOR\source\repos\VoiceCommandApp\VoiceCommandApp\obj\Debug\VoiceCommandApp.csproj.GenerateResource.cache
+C:\Users\GURNOOR\source\repos\VoiceCommandApp\VoiceCommandApp\obj\Debug\VoiceCommandApp.csproj.CoreCompileInputs.cache
+C:\Users\GURNOOR\source\repos\VoiceCommandApp\VoiceCommandApp\obj\Debug\VoiceCommandApp.exe
+C:\Users\GURNOOR\source\repos\VoiceCommandApp\VoiceCommandApp\obj\Debug\VoiceCommandApp.pdb
+C:\Users\GURNOOR\source\repos\VoiceCommandApp\VoiceCommandApp\obj\Debug\VoiceCommandApp.exe.config

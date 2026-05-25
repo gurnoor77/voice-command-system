@@ -1,0 +1,73 @@
+2026-05-26 00:53:47.645 +05:30 [INF] Now listening on: https://localhost:7123
+2026-05-26 00:53:47.761 +05:30 [INF] Now listening on: http://localhost:5293
+2026-05-26 00:53:48.020 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-05-26 00:53:48.022 +05:30 [INF] Hosting environment: Development
+2026-05-26 00:53:48.024 +05:30 [INF] Content root path: C:\Users\GURNOOR\source\repos\VoiceCommandApp\VoiceCommandAPI
+2026-05-26 00:53:48.651 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7123/swagger/index.html - null null
+2026-05-26 00:53:49.521 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7123/api/Commands - null null
+2026-05-26 00:53:49.527 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7123/api/Commands/stats - null null
+2026-05-26 00:53:49.554 +05:30 [INF] CORS policy execution successful.
+2026-05-26 00:53:49.562 +05:30 [INF] CORS policy execution successful.
+2026-05-26 00:53:49.587 +05:30 [INF] Executing endpoint 'VoiceCommandAPI.Controllers.CommandsController.GetAll (VoiceCommandAPI)'
+2026-05-26 00:53:49.588 +05:30 [INF] Executing endpoint 'VoiceCommandAPI.Controllers.CommandsController.GetStats (VoiceCommandAPI)'
+2026-05-26 00:53:49.643 +05:30 [INF] Route matched with {action = "GetAll", controller = "Commands"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll() on controller VoiceCommandAPI.Controllers.CommandsController (VoiceCommandAPI).
+2026-05-26 00:53:49.643 +05:30 [INF] Route matched with {action = "GetStats", controller = "Commands"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetStats() on controller VoiceCommandAPI.Controllers.CommandsController (VoiceCommandAPI).
+2026-05-26 00:53:49.649 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7123/swagger/index.html - 200 null text/html;charset=utf-8 1028.7963ms
+2026-05-26 00:53:49.653 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7123/_framework/aspnetcore-browser-refresh.js - null null
+2026-05-26 00:53:49.653 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7123/_vs/browserLink - null null
+2026-05-26 00:53:49.747 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7123/_framework/aspnetcore-browser-refresh.js - 200 16515 application/javascript; charset=utf-8 95.0461ms
+2026-05-26 00:53:50.054 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7123/_vs/browserLink - 200 null text/javascript; charset=UTF-8 401.6744ms
+2026-05-26 00:53:50.107 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7123/swagger/v1/swagger.json - null null
+2026-05-26 00:53:50.137 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7123/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 30.4824ms
+2026-05-26 00:53:50.778 +05:30 [INF] Stats fetched successfully.
+2026-05-26 00:53:50.778 +05:30 [INF] Returning 8 commands from database.
+2026-05-26 00:53:50.817 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-05-26 00:53:50.819 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[VoiceCommandAPI.Models.Command, VoiceCommandAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-05-26 00:53:50.859 +05:30 [INF] Executed action VoiceCommandAPI.Controllers.CommandsController.GetStats (VoiceCommandAPI) in 1204.6671ms
+2026-05-26 00:53:50.859 +05:30 [INF] Executed action VoiceCommandAPI.Controllers.CommandsController.GetAll (VoiceCommandAPI) in 1206.329ms
+2026-05-26 00:53:50.861 +05:30 [INF] Executed endpoint 'VoiceCommandAPI.Controllers.CommandsController.GetStats (VoiceCommandAPI)'
+2026-05-26 00:53:50.862 +05:30 [INF] Executed endpoint 'VoiceCommandAPI.Controllers.CommandsController.GetAll (VoiceCommandAPI)'
+2026-05-26 00:53:50.869 +05:30 [INF] HTTP GET /api/Commands responded 200 in 1322.1864 ms
+2026-05-26 00:53:50.869 +05:30 [INF] HTTP GET /api/Commands/stats responded 200 in 1303.6145 ms
+2026-05-26 00:53:50.875 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7123/api/Commands - 200 null application/json; charset=utf-8 1356.0072ms
+2026-05-26 00:53:50.877 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7123/api/Commands/stats - 200 null application/json; charset=utf-8 1350.5494ms
+2026-05-26 00:53:59.318 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7123/api/Commands - null null
+2026-05-26 00:53:59.318 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7123/api/Commands/stats - null null
+2026-05-26 00:53:59.326 +05:30 [INF] CORS policy execution successful.
+2026-05-26 00:53:59.328 +05:30 [INF] CORS policy execution successful.
+2026-05-26 00:53:59.329 +05:30 [INF] Executing endpoint 'VoiceCommandAPI.Controllers.CommandsController.GetAll (VoiceCommandAPI)'
+2026-05-26 00:53:59.329 +05:30 [INF] Executing endpoint 'VoiceCommandAPI.Controllers.CommandsController.GetStats (VoiceCommandAPI)'
+2026-05-26 00:53:59.331 +05:30 [INF] Route matched with {action = "GetAll", controller = "Commands"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll() on controller VoiceCommandAPI.Controllers.CommandsController (VoiceCommandAPI).
+2026-05-26 00:53:59.331 +05:30 [INF] Route matched with {action = "GetStats", controller = "Commands"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetStats() on controller VoiceCommandAPI.Controllers.CommandsController (VoiceCommandAPI).
+2026-05-26 00:53:59.335 +05:30 [INF] Returning commands from cache.
+2026-05-26 00:53:59.341 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[VoiceCommandAPI.Models.Command, VoiceCommandAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-05-26 00:53:59.345 +05:30 [INF] Executed action VoiceCommandAPI.Controllers.CommandsController.GetAll (VoiceCommandAPI) in 9.982ms
+2026-05-26 00:53:59.347 +05:30 [INF] Executed endpoint 'VoiceCommandAPI.Controllers.CommandsController.GetAll (VoiceCommandAPI)'
+2026-05-26 00:53:59.349 +05:30 [INF] HTTP GET /api/Commands responded 200 in 24.0073 ms
+2026-05-26 00:53:59.355 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7123/api/Commands - 200 null application/json; charset=utf-8 37.095ms
+2026-05-26 00:53:59.370 +05:30 [INF] Stats fetched successfully.
+2026-05-26 00:53:59.373 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-05-26 00:53:59.379 +05:30 [INF] Executed action VoiceCommandAPI.Controllers.CommandsController.GetStats (VoiceCommandAPI) in 41.2075ms
+2026-05-26 00:53:59.383 +05:30 [INF] Executed endpoint 'VoiceCommandAPI.Controllers.CommandsController.GetStats (VoiceCommandAPI)'
+2026-05-26 00:53:59.386 +05:30 [INF] HTTP GET /api/Commands/stats responded 200 in 58.0492 ms
+2026-05-26 00:53:59.391 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7123/api/Commands/stats - 200 null application/json; charset=utf-8 73.2457ms
+2026-05-26 00:54:09.500 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7123/api/Commands - null null
+2026-05-26 00:54:09.501 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7123/api/Commands/stats - null null
+2026-05-26 00:54:09.506 +05:30 [INF] CORS policy execution successful.
+2026-05-26 00:54:09.510 +05:30 [INF] CORS policy execution successful.
+2026-05-26 00:54:09.511 +05:30 [INF] Executing endpoint 'VoiceCommandAPI.Controllers.CommandsController.GetAll (VoiceCommandAPI)'
+2026-05-26 00:54:09.511 +05:30 [INF] Executing endpoint 'VoiceCommandAPI.Controllers.CommandsController.GetStats (VoiceCommandAPI)'
+2026-05-26 00:54:09.512 +05:30 [INF] Route matched with {action = "GetAll", controller = "Commands"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetAll() on controller VoiceCommandAPI.Controllers.CommandsController (VoiceCommandAPI).
+2026-05-26 00:54:09.514 +05:30 [INF] Route matched with {action = "GetStats", controller = "Commands"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetStats() on controller VoiceCommandAPI.Controllers.CommandsController (VoiceCommandAPI).
+2026-05-26 00:54:09.517 +05:30 [INF] Returning commands from cache.
+2026-05-26 00:54:09.523 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[VoiceCommandAPI.Models.Command, VoiceCommandAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-05-26 00:54:09.524 +05:30 [INF] Stats fetched successfully.
+2026-05-26 00:54:09.526 +05:30 [INF] Executed action VoiceCommandAPI.Controllers.CommandsController.GetAll (VoiceCommandAPI) in 8.7025ms
+2026-05-26 00:54:09.527 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-05-26 00:54:09.530 +05:30 [INF] Executed endpoint 'VoiceCommandAPI.Controllers.CommandsController.GetAll (VoiceCommandAPI)'
+2026-05-26 00:54:09.532 +05:30 [INF] Executed action VoiceCommandAPI.Controllers.CommandsController.GetStats (VoiceCommandAPI) in 10.5054ms
+2026-05-26 00:54:09.532 +05:30 [INF] HTTP GET /api/Commands responded 200 in 26.5199 ms
+2026-05-26 00:54:09.535 +05:30 [INF] Executed endpoint 'VoiceCommandAPI.Controllers.CommandsController.GetStats (VoiceCommandAPI)'
+2026-05-26 00:54:09.539 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7123/api/Commands - 200 null application/json; charset=utf-8 40.3848ms
+2026-05-26 00:54:09.541 +05:30 [INF] HTTP GET /api/Commands/stats responded 200 in 31.7375 ms
+2026-05-26 00:54:09.550 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7123/api/Commands/stats - 200 null application/json; charset=utf-8 49.1927ms

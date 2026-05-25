@@ -1,0 +1,64 @@
+[
+  {
+    "ContainingType": "VoiceCommandAPI.Controllers.CommandsController",
+    "Method": "GetAll",
+    "RelativePath": "api/Commands",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VoiceCommandAPI.Controllers.CommandsController",
+    "Method": "Save",
+    "RelativePath": "api/Commands",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "command",
+        "Type": "VoiceCommandAPI.Models.Command",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VoiceCommandAPI.Controllers.CommandsController",
+    "Method": "DeleteAll",
+    "RelativePath": "api/Commands",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VoiceCommandAPI.Controllers.CommandsController",
+    "Method": "Delete",
+    "RelativePath": "api/Commands/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VoiceCommandAPI.Controllers.CommandsController",
+    "Method": "GetStats",
+    "RelativePath": "api/Commands/stats",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]
