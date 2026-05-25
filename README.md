@@ -49,5 +49,4 @@ A full-stack voice command system built with C#, ASP.NET Core, React, and SQL Se
 
 **Gurnoor Singh** — B.E. Computer Science, Chandigarh University (2023-2027)
 
-- LeetCode Rating: 1687
 - GitHub: github.com/gurnoor77
