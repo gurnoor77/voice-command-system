@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Caching.Memory;
+using VoiceCommandAPI.Hubs;
 using VoiceCommandAPI.Models;
 
 namespace VoiceCommandAPI.Controllers
@@ -14,13 +16,15 @@ namespace VoiceCommandAPI.Controllers
         private readonly string _connectionString;
         private readonly IMemoryCache _cache;
         private readonly ILogger<CommandsController> _logger;
+        private readonly IHubContext<CommandHub> _hubContext;
         private const string CacheKey = "all_commands";
 
-        public CommandsController(IConfiguration configuration, IMemoryCache cache, ILogger<CommandsController> logger)
+        public CommandsController(IConfiguration configuration, IMemoryCache cache, ILogger<CommandsController> logger, IHubContext<CommandHub> hubContext)
         {
             _connectionString = configuration.GetConnectionString("conStr") ?? "";
             _cache = cache;
             _logger = logger;
+            _hubContext = hubContext;
         }
 
         [HttpGet]
@@ -61,7 +65,7 @@ namespace VoiceCommandAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Save([FromBody] Command command)
+        public async Task<IActionResult> Save([FromBody] Command command)
         {
             if (string.IsNullOrWhiteSpace(command.CommandText))
                 return BadRequest(new { message = "CommandText cannot be empty." });
@@ -81,6 +85,10 @@ namespace VoiceCommandAPI.Controllers
 
                     _cache.Remove(CacheKey);
                     _logger.LogInformation("Command saved: {CommandText}", command.CommandText);
+
+                    // Broadcast to all connected React dashboards instantly
+                    await _hubContext.Clients.All.SendAsync("ReceiveCommand", command.CommandText, DateTime.Now.ToString("g"));
+
                     return Ok(new { message = "Command saved." });
                 }
                 catch

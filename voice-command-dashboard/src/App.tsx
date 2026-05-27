@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Cell } from 'recharts'
+import * as signalR from '@microsoft/signalr'
 
 const API = 'https://localhost:7123/api'
 
@@ -55,6 +56,29 @@ function App() {
     fetchData()
     const interval = setInterval(fetchData, 10000)
     return () => clearInterval(interval)
+  }, [])
+
+useEffect(() => {
+    const connection = new signalR.HubConnectionBuilder()
+      .withUrl('https://localhost:7123/commandHub', {
+        skipNegotiation: true,
+        transport: signalR.HttpTransportType.WebSockets
+      })
+      .withAutomaticReconnect()
+      .build()
+
+    connection.on('ReceiveCommand', (commandText: string) => {
+      console.log('New command received:', commandText)
+      fetchData()
+    })
+
+    connection.start()
+      .then(() => console.log('SignalR connected'))
+      .catch(err => console.error('SignalR error:', err))
+
+    return () => {
+      connection.stop()
+    }
   }, [])
 
   const deleteCommand = async (id: number) => {

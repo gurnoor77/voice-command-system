@@ -25,6 +25,7 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader());
 });
 
+builder.Services.AddSignalR();
 builder.Services.AddRateLimiter(options =>
 {
     options.AddFixedWindowLimiter("fixed", limiterOptions =>
@@ -43,5 +44,5 @@ app.UseSerilogRequestLogging();
 app.UseCors("AllowAll");
 app.UseRateLimiter();
 app.MapControllers();
-
+app.MapHub<VoiceCommandAPI.Hubs.CommandHub>("/commandHub");
 app.Run();

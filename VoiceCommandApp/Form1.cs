@@ -319,23 +319,27 @@ namespace VoiceCommandApp
             }
         }
 
-        private void SaveCommand(string command)
+        private async void SaveCommand(string command)
         {
             try
             {
-                using (SqlConnection con = new SqlConnection(connectionString))
+                using (var client = new System.Net.Http.HttpClient())
                 {
-                    con.Open();
-                    using (SqlCommand cmd = new SqlCommand("INSERT INTO Commands (CommandText) VALUES (@cmd)", con))
-                    {
-                        cmd.Parameters.AddWithValue("@cmd", command);
-                        cmd.ExecuteNonQuery();
-                    }
+                    client.BaseAddress = new Uri("https://localhost:7123/");
+                    // Ignore SSL certificate for local dev
+                    var handler = new System.Net.Http.HttpClientHandler();
+                    handler.ServerCertificateCustomValidationCallback = (m, c, ch, e) => true;
+                    var secureClient = new System.Net.Http.HttpClient(handler);
+                    secureClient.BaseAddress = new Uri("https://localhost:7123/");
+
+                    var json = Newtonsoft.Json.JsonConvert.SerializeObject(new { commandText = command });
+                    var content = new System.Net.Http.StringContent(json, System.Text.Encoding.UTF8, "application/json");
+                    await secureClient.PostAsync("api/Commands", content);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Database error: " + ex.Message);
+                MessageBox.Show("API error: " + ex.Message);
             }
         }
 
