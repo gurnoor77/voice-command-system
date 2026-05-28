@@ -5,6 +5,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Caching.Memory;
 using VoiceCommandAPI.Hubs;
 using VoiceCommandAPI.Models;
+using VoiceCommandAPI.Services;
 
 namespace VoiceCommandAPI.Controllers
 {
@@ -17,14 +18,16 @@ namespace VoiceCommandAPI.Controllers
         private readonly IMemoryCache _cache;
         private readonly ILogger<CommandsController> _logger;
         private readonly IHubContext<CommandHub> _hubContext;
+        private readonly GroqService _groqService;
         private const string CacheKey = "all_commands";
 
-        public CommandsController(IConfiguration configuration, IMemoryCache cache, ILogger<CommandsController> logger, IHubContext<CommandHub> hubContext)
+        public CommandsController(IConfiguration configuration, IMemoryCache cache, ILogger<CommandsController> logger, IHubContext<CommandHub> hubContext, GroqService groqService)
         {
             _connectionString = configuration.GetConnectionString("conStr") ?? "";
             _cache = cache;
             _logger = logger;
             _hubContext = hubContext;
+            _groqService = groqService;
         }
 
         [HttpGet]
@@ -86,7 +89,6 @@ namespace VoiceCommandAPI.Controllers
                     _cache.Remove(CacheKey);
                     _logger.LogInformation("Command saved: {CommandText}", command.CommandText);
 
-                    // Broadcast to all connected React dashboards instantly
                     await _hubContext.Clients.All.SendAsync("ReceiveCommand", command.CommandText, DateTime.Now.ToString("g"));
 
                     return Ok(new { message = "Command saved." });
@@ -171,6 +173,32 @@ namespace VoiceCommandAPI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error fetching stats.");
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet("debug-key")]
+        public IActionResult DebugKey([FromServices] IConfiguration config)
+        {
+            var key = config["Groq:ApiKey"] ?? "NOT FOUND";
+            return Ok(new { keyLength = key.Length, keyStart = key.Substring(0, Math.Min(8, key.Length)) });
+        }
+
+        [HttpPost("recognize")]
+        public async Task<IActionResult> Recognize([FromBody] Command command)
+        {
+            if (string.IsNullOrWhiteSpace(command.CommandText))
+                return BadRequest(new { message = "Speech text cannot be empty." });
+
+            try
+            {
+                string intent = await _groqService.GetIntentAsync(command.CommandText);
+                _logger.LogInformation("Groq recognized intent: {Intent} from speech: {Speech}", intent, command.CommandText);
+                return Ok(new { intent = intent, originalSpeech = command.CommandText });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Groq error");
                 return StatusCode(500, ex.Message);
             }
         }

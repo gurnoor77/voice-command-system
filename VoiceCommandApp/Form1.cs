@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -23,10 +23,9 @@ namespace VoiceCommandApp
 
         private void InitializeDashboard()
         {
-            // Footer
             footer = new Label
             {
-                Text = "© 2026 Gurnoor Singh | Built with C# · ASP.NET Core · React",
+                Text = "Â© 2026 Gurnoor Singh | Built with C# Â· ASP.NET Core Â· React",
                 Font = new Font("Segoe UI", 9F, FontStyle.Italic),
                 ForeColor = Color.Gray,
                 AutoSize = true,
@@ -34,7 +33,6 @@ namespace VoiceCommandApp
             };
             this.Controls.Add(footer);
 
-            // DataGridView Styling
             dataGridView1.ColumnHeadersVisible = true;
             dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.EnableHeadersVisualStyles = false;
@@ -53,25 +51,20 @@ namespace VoiceCommandApp
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-            // Hover Effects
             btnStartListening.MouseEnter += (s, e) => { if (!isListening) btnStartListening.BackColor = Color.DeepSkyBlue; };
             btnStartListening.MouseLeave += (s, e) => { if (!isListening) btnStartListening.BackColor = Color.DodgerBlue; };
             btnViewHistory.MouseEnter += (s, e) => btnViewHistory.BackColor = Color.DimGray;
             btnViewHistory.MouseLeave += (s, e) => btnViewHistory.BackColor = Color.Gray;
 
-            // Connection String
             connectionString = ConfigurationManager.ConnectionStrings["conStr"].ConnectionString;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             dataGridView1.Visible = false;
-
-            // Position footer correctly after form is loaded
             footer.Location = new Point(30, this.ClientSize.Height - 25);
         }
 
-        // FIX 1: Dispose recognizer properly when form closes
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             if (recognizer != null)
@@ -91,7 +84,7 @@ namespace VoiceCommandApp
                 {
                     recognizer = new SpeechRecognitionEngine(new System.Globalization.CultureInfo("en-US"));
                     recognizer.SetInputToDefaultAudioDevice();
-                    recognizer.UpdateRecognizerSetting("CFGConfidenceRejectionThreshold", 50);
+                    recognizer.UpdateRecognizerSetting("CFGConfidenceRejectionThreshold", 30);
 
                     Choices commands = new Choices();
                     commands.Add(new string[] {
@@ -139,7 +132,6 @@ namespace VoiceCommandApp
 
         private void Recognizer_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
-            // Must update UI from UI thread
             if (this.InvokeRequired)
             {
                 this.Invoke(new Action(() => Recognizer_SpeechRecognized(sender, e)));
@@ -149,19 +141,64 @@ namespace VoiceCommandApp
             float confidence = e.Result.Confidence;
             string cmd = e.Result.Text.ToLower();
 
-            if (confidence >= 0.6)
+            if (confidence >= 0.4)
             {
-                // FIX 2: Show confidence score
                 int confidencePct = (int)(confidence * 100);
-                txtRecognized.Text = $"Recognized: {cmd}  (Confidence: {confidencePct}%)";
-                lblStatus.Text = "Status: Command recognized.";
-                SaveCommand(cmd);
-                ExecuteCommand(cmd);
+                txtRecognized.Text = $"Heard: {cmd}  (Confidence: {confidencePct}%)";
+                lblStatus.Text = "Status: Processing with AI...";
+                ProcessWithAI(cmd);
             }
             else
             {
-                lblStatus.Text = "Status: Voice not clear — try again.";
+                lblStatus.Text = "Status: Voice not clear â€” try again.";
             }
+        }
+
+        private async void ProcessWithAI(string spokenText)
+        {
+            try
+            {
+                var handler = new System.Net.Http.HttpClientHandler();
+                handler.ServerCertificateCustomValidationCallback = (m, c, ch, e) => true;
+                var client = new System.Net.Http.HttpClient(handler);
+                client.BaseAddress = new Uri("https://localhost:7123/");
+
+                var json = Newtonsoft.Json.JsonConvert.SerializeObject(new { commandText = spokenText });
+                var content = new System.Net.Http.StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+                var response = await client.PostAsync("api/Commands/recognize", content);
+                var responseJson = await response.Content.ReadAsStringAsync();
+
+                dynamic result = Newtonsoft.Json.JsonConvert.DeserializeObject(responseJson);
+                string intent = result.intent.ToString();
+
+                if (this.InvokeRequired)
+                    this.Invoke(new Action(() => HandleAIIntent(intent, spokenText)));
+                else
+                    HandleAIIntent(intent, spokenText);
+            }
+            catch (Exception ex)
+            {
+                if (this.InvokeRequired)
+                    this.Invoke(new Action(() => lblStatus.Text = "Status: AI error - " + ex.Message));
+                else
+                    lblStatus.Text = "Status: AI error - " + ex.Message;
+            }
+        }
+
+        private void HandleAIIntent(string intent, string spokenText)
+        {
+            txtRecognized.Text = $"Heard: {spokenText} â†’ AI: {intent}";
+            lblStatus.Text = "Status: Command recognized by AI.";
+
+            if (intent == "unknown")
+            {
+                lblStatus.Text = "Status: Command not recognized.";
+                return;
+            }
+
+            SaveCommand(intent);
+            ExecuteCommand(intent);
         }
 
         private void ExecuteCommand(string cmd)
@@ -171,25 +208,20 @@ namespace VoiceCommandApp
                 case "hello":
                     MessageBox.Show("Hello! How can I help you?");
                     break;
-
                 case "exit":
                     Application.Exit();
                     break;
-
                 case "clear":
                     txtRecognized.Clear();
                     lblStatus.Text = "Status: Cleared.";
                     break;
-
                 case "open notepad":
                     if (Confirm("Open Notepad?"))
                         System.Diagnostics.Process.Start("notepad.exe");
                     break;
-
                 case "open chrome":
                     if (Confirm("Open Google Chrome?"))
                     {
-                        // FIX 3: Chrome path fallback
                         try { System.Diagnostics.Process.Start("chrome.exe"); }
                         catch
                         {
@@ -201,34 +233,27 @@ namespace VoiceCommandApp
                         }
                     }
                     break;
-
                 case "open calculator":
                     if (Confirm("Open Calculator?"))
                         System.Diagnostics.Process.Start("calc.exe");
                     break;
-
                 case "open paint":
                     if (Confirm("Open Paint?"))
                         System.Diagnostics.Process.Start("mspaint.exe");
                     break;
-
                 case "show date":
                     MessageBox.Show("Today's date is: " + DateTime.Now.ToLongDateString());
                     break;
-
                 case "show time":
                     MessageBox.Show("Current time: " + DateTime.Now.ToShortTimeString());
                     break;
-
                 case "lock screen":
                     if (Confirm("Lock the screen?"))
                         System.Diagnostics.Process.Start("rundll32.exe", "user32.dll,LockWorkStation");
                     break;
-
                 case "minimize window":
                     this.WindowState = FormWindowState.Minimized;
                     break;
-
                 case "maximize window":
                     this.WindowState = FormWindowState.Maximized;
                     break;
@@ -250,7 +275,6 @@ namespace VoiceCommandApp
             }
         }
 
-        // FIX 4: Delete History button handler
         private void btnDeleteHistory_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Are you sure you want to delete ALL command history?",
@@ -275,7 +299,6 @@ namespace VoiceCommandApp
             }
         }
 
-        // FIX 5: Copy to clipboard button handler
         private void btnCopy_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(txtRecognized.Text))
@@ -323,19 +346,14 @@ namespace VoiceCommandApp
         {
             try
             {
-                using (var client = new System.Net.Http.HttpClient())
-                {
-                    client.BaseAddress = new Uri("https://localhost:7123/");
-                    // Ignore SSL certificate for local dev
-                    var handler = new System.Net.Http.HttpClientHandler();
-                    handler.ServerCertificateCustomValidationCallback = (m, c, ch, e) => true;
-                    var secureClient = new System.Net.Http.HttpClient(handler);
-                    secureClient.BaseAddress = new Uri("https://localhost:7123/");
+                var handler = new System.Net.Http.HttpClientHandler();
+                handler.ServerCertificateCustomValidationCallback = (m, c, ch, e) => true;
+                var secureClient = new System.Net.Http.HttpClient(handler);
+                secureClient.BaseAddress = new Uri("https://localhost:7123/");
 
-                    var json = Newtonsoft.Json.JsonConvert.SerializeObject(new { commandText = command });
-                    var content = new System.Net.Http.StringContent(json, System.Text.Encoding.UTF8, "application/json");
-                    await secureClient.PostAsync("api/Commands", content);
-                }
+                var json = Newtonsoft.Json.JsonConvert.SerializeObject(new { commandText = command });
+                var content = new System.Net.Http.StringContent(json, System.Text.Encoding.UTF8, "application/json");
+                await secureClient.PostAsync("api/Commands", content);
             }
             catch (Exception ex)
             {
