@@ -10,17 +10,19 @@ A full-stack AI-powered voice command system built with C#, ASP.NET Core, React,
 
 
 
-\- \*\*Desktop App\*\* - C# Windows Forms, System.Speech.Recognition
+| Layer | Technology |
 
-\- \*\*Backend API\*\* - ASP.NET Core 8, REST API, SignalR
+|-------|------------|
 
-\- \*\*AI Layer\*\* - Groq AI (LLaMA 3.3), Natural Language Intent Recognition
+| Desktop App | C# Windows Forms, System.Speech.Recognition |
 
-\- \*\*Frontend\*\* - React 18, TypeScript, Vite, TailwindCSS, Recharts
+| Backend API | ASP.NET Core 8, REST API, SignalR |
 
-\- \*\*Database\*\* - SQL Server Express
+| AI Layer | Groq AI LLaMA 3.3, Natural Language Intent Recognition |
 
-\- \*\*Features\*\* - ACID Transactions, Memory Caching, Rate Limiting, Serilog Logging, CORS, Swagger
+| Frontend | React 18, TypeScript, Vite, TailwindCSS, Recharts |
+
+| Database | SQL Server Express |
 
 
 
@@ -30,7 +32,7 @@ A full-stack AI-powered voice command system built with C#, ASP.NET Core, React,
 
 \- Voice recognition with natural language understanding via Groq AI
 
-\- Say anything naturally - AI detects the intent automatically
+\- Say anything naturally, AI detects the intent automatically
 
 \- Real-time web dashboard with SignalR WebSockets
 
@@ -40,9 +42,9 @@ A full-stack AI-powered voice command system built with C#, ASP.NET Core, React,
 
 \- ACID-compliant database transactions
 
-\- Rate limiting (10 requests per 10 seconds)
+\- Rate limiting 10 requests per 10 seconds
 
-\- Memory caching (30 second TTL)
+\- Memory caching 30 second TTL
 
 \- Structured logging with Serilog
 
@@ -52,7 +54,7 @@ A full-stack AI-powered voice command system built with C#, ASP.NET Core, React,
 
 
 
-User speaks - System.Speech captures audio - Groq AI identifies intent - Command executes - SignalR pushes update to React dashboard instantly
+User speaks, System.Speech captures audio, Groq AI identifies intent, Command executes, SignalR pushes update to React dashboard instantly
 
 
 
@@ -60,11 +62,15 @@ User speaks - System.Speech captures audio - Groq AI identifies intent - Command
 
 
 
-\- VoiceCommandApp - C# Windows Forms desktop app
+| Folder | Description |
 
-\- VoiceCommandAPI - ASP.NET Core 8 REST API
+|--------|-------------|
 
-\- voice-command-dashboard - React + TypeScript frontend
+| VoiceCommandApp | C# Windows Forms desktop app |
+
+| VoiceCommandAPI | ASP.NET Core 8 REST API |
+
+| voice-command-dashboard | React TypeScript frontend |
 
 
 
@@ -100,11 +106,11 @@ User speaks - System.Speech captures audio - Groq AI identifies intent - Command
 
 3\. Add Groq API key to appsettings.Development.json
 
-4\. Run VoiceCommandAPI (ASP.NET Core)
+4\. Run VoiceCommandAPI
 
-5\. Run VoiceCommandApp (Windows Forms)
+5\. Run VoiceCommandApp
 
-6\. Run voice-command-dashboard (npm run dev)
+6\. Run voice-command-dashboard with npm run dev
 
 
 
@@ -112,9 +118,9 @@ User speaks - System.Speech captures audio - Groq AI identifies intent - Command
 
 
 
-\*\*Gurnoor Singh\*\* - B.E. Computer Science, Chandigarh University (2023-2027)
+\*\*Gurnoor Singh\*\* - B.E. Computer Science, Chandigarh University 2023-2027
 
 
 
-GitHub: github.com/gurnoor77
+GitHub: https://github.com/gurnoor77
 
