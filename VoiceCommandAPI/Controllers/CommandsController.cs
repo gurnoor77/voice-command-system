@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Data.SqlClient;
@@ -12,6 +13,7 @@ namespace VoiceCommandAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [EnableRateLimiting("fixed")]
+    [Microsoft.AspNetCore.Authorization.Authorize]
     public class CommandsController : ControllerBase
     {
         private readonly string _connectionString;

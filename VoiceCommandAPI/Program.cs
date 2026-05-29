@@ -1,7 +1,8 @@
-using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.RateLimiting;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using System.Text;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -14,8 +15,35 @@ builder.Host.UseSerilog();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Description = "JWT Authorization header. Enter: Bearer {token}",
+        Name = "Authorization",
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+    c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
+
+builder.Services.AddSignalR();
 builder.Services.AddMemoryCache();
+builder.Services.AddScoped<VoiceCommandAPI.Services.GroqService>();
 
 builder.Services.AddCors(options =>
 {
@@ -25,7 +53,6 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader());
 });
 
-builder.Services.AddSignalR();
 builder.Services.AddRateLimiter(options =>
 {
     options.AddFixedWindowLimiter("fixed", limiterOptions =>
@@ -36,6 +63,25 @@ builder.Services.AddRateLimiter(options =>
     options.RejectionStatusCode = 429;
 });
 
+// JWT Authentication
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? ""))
+        };
+    });
+
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
 app.UseSwagger();
@@ -43,6 +89,9 @@ app.UseSwaggerUI();
 app.UseSerilogRequestLogging();
 app.UseCors("AllowAll");
 app.UseRateLimiter();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 app.MapHub<VoiceCommandAPI.Hubs.CommandHub>("/commandHub");
+
 app.Run();
