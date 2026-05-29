@@ -1,3 +1,6 @@
+## Live Demo
+Dashboard: https://voice-command-system-blond.vercel.app
+
 # Voice Command System
 
 A full-stack AI-powered voice command system built with C#, ASP.NET Core, React, and SQL Server.
